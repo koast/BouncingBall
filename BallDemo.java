@@ -34,7 +34,8 @@ public class BallDemo
         aleatorio = new Random();
         for(int i = 0 ; i < numberOfBalls ; i++)
         {
-            balls.add(new BouncingBall(aleatorio.nextInt(250),aleatorio.nextInt(450),aleatorio.nextInt(100),Color.BLUE, ground,myCanvas));
+            balls.add(new BouncingBall(aleatorio.nextInt(250),aleatorio.nextInt(450),aleatorio.nextInt(100),
+            new Color(aleatorio.nextInt(256),aleatorio.nextInt(256),aleatorio.nextInt(256)), ground,myCanvas));
         }
         // draw the ground
         myCanvas.drawLine(50, ground, 550, ground);
