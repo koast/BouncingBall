@@ -14,6 +14,7 @@ public class BallDemo
 {
     private Canvas myCanvas;
     private ArrayList<BouncingBall> balls;
+    private Random aleatorio;
     /**
      * Create a BallDemo object. Creates a fresh canvas and makes it visible.
      */
@@ -30,9 +31,10 @@ public class BallDemo
     {
         int ground = 400;   // position of the ground line
         myCanvas.setVisible(true);
+        aleatorio = new Random();
         for(int i = 0 ; i < numberOfBalls ; i++)
         {
-            balls.add(new BouncingBall(50,50,16,Color.BLUE, ground,myCanvas));
+            balls.add(new BouncingBall(aleatorio.nextInt(250),aleatorio.nextInt(450),aleatorio.nextInt(100),Color.BLUE, ground,myCanvas));
         }
         // draw the ground
         myCanvas.drawLine(50, ground, 550, ground);
