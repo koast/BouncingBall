@@ -3,22 +3,22 @@ import java.util.Random;
 import java.util.ArrayList;
 
 /**
- * Class BallDemo - a short demonstration showing animation with the 
+ * Class BoxBounce - a short demonstration showing animation with the 
  * Canvas class. 
  *
  * @author Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
 
-public class BallDemo   
+public class BoxBounce   
 {
     private Canvas myCanvas;
-    private ArrayList<BouncingBall> balls;
+    private ArrayList<BoxBall> balls;
     private Random aleatorio;
     /**
-     * Create a BallDemo object. Creates a fresh canvas and makes it visible.
+     * Create a BoxBounce object. Creates a fresh canvas and makes it visible.
      */
-    public BallDemo()
+    public BoxBounce()
     {
         balls = new ArrayList<>();
         myCanvas = new Canvas("Ball Demo", 600, 500);
@@ -29,19 +29,21 @@ public class BallDemo
      */
     public void bounce(int numberOfBalls)
     {
-        int ground = 400;   // position of the ground line
+        int ground = 600;   // position of the ground line
         myCanvas.setVisible(true);
         aleatorio = new Random();
         for(int i = 0 ; i < numberOfBalls ; i++)
         {
-            balls.add(new BouncingBall(aleatorio.nextInt(250),aleatorio.nextInt(450),aleatorio.nextInt(100),
+            balls.add(new BoxBall(aleatorio.nextInt(250),aleatorio.nextInt(450),aleatorio.nextInt(100),
                     new Color(aleatorio.nextInt(256),aleatorio.nextInt(256),aleatorio.nextInt(256)), ground,myCanvas));
         }
         // draw the ground
-        myCanvas.drawLine(50, ground, 550, ground);
-
+        myCanvas.drawLine(0,ground,600,ground);
+        myCanvas.drawLine(600,ground,600,0);
+        myCanvas.drawLine(600,0,0,0);
+        myCanvas.drawLine(0, 0,0,ground);
         // crate and show the balls
-        for(BouncingBall showBalls: balls)
+        for(BoxBall showBalls: balls)
         {
             showBalls.draw();
         }
@@ -49,13 +51,9 @@ public class BallDemo
         boolean finished =  false;
         while(!finished) {
             myCanvas.wait(50);           // small delay
-            for(BouncingBall showBalls: balls)
+            for(BoxBall showBalls: balls)
             {
                 showBalls.move();
-                if(showBalls.getXPosition() >= 550)
-                {
-                    finished = true;
-                }
                 // stop once ball has travelled a certain distance on x axis
 
             }
