@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.Random;
 
 /**
  * Class BouncingBall - a graphical ball that observes the effect of gravity. The ball
@@ -18,16 +19,15 @@ import java.awt.geom.*;
 
 public class BoxBall
 {
-    private int xSpeed =  10;
-    private int ballDegradation = 0;
+    private int xSpeed =  1;
+    private int ySpeed = 1;   
     private Ellipse2D.Double circle;
     private Color color;
     private int diameter;
     private int xPosition;
     private int yPosition;
-    private final int groundPosition;      // y position of ground
     private Canvas canvas;
-    private int ySpeed = 10;                // initial downward speed
+    private Random aleatorio;
 
     /**
      * Constructor for objects of class BouncingBall
@@ -39,15 +39,28 @@ public class BoxBall
      * @param groundPos  the position of the ground (where the wall will bounce)
      * @param drawingCanvas  the canvas to draw this ball on
      */
-    public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor,
-                        int groundPos, Canvas drawingCanvas)
+    public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor, Canvas drawingCanvas)
     {
         xPosition = xPos;
         yPosition = yPos;
         color = ballColor;
         diameter = ballDiameter;
-        groundPosition = groundPos;
         canvas = drawingCanvas;
+        aleatorio = new Random();
+        
+        int posicionAleatoria;
+        posicionAleatoria = aleatorio.nextInt(2);
+        
+        if(posicionAleatoria == 0)
+        {
+            xSpeed = -xSpeed;
+        }
+        posicionAleatoria = aleatorio.nextInt(2);
+        
+        if(posicionAleatoria == 0)
+        {
+            ySpeed = -ySpeed;
+        }
     }
 
     /**
@@ -72,27 +85,21 @@ public class BoxBall
      **/
     public void move()
     {
-        // remove from canvas at the current position
         erase();
-            
-        // compute new position
-        
-        yPosition += ySpeed;
-        xPosition +=xSpeed;
 
-        // check if it has hit the ground
-        if(yPosition >= (399 - diameter) || yPosition <= 1) 
+        xPosition += xSpeed;
+        yPosition += ySpeed;
+
+        if(yPosition <= BoxBounce.MINIMA_Y || yPosition + diameter >= BoxBounce.MAXIMA_Y) 
         {
             ySpeed = -ySpeed; 
         }
-        
-        if(xPosition >= (549 - diameter) || xPosition <= (diameter/2)) 
+
+        if(xPosition <= BoxBounce.MINIMA_X || xPosition + diameter >= BoxBounce.MAXIMA_X) 
         {
             xSpeed = -xSpeed; 
         }
-
-        // draw again at new position
-        draw();
+        draw();   
     }    
 
     /**
